@@ -4,3 +4,4 @@ error.txt
 llvm_ir.txt
 
 .idea
+__pycache__
