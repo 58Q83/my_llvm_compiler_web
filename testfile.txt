@@ -1,4 +1,5 @@
 int main(){
  	printf("Hello World\n");
+         a = 2;
 	return 0;
 }
