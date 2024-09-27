@@ -27,7 +27,7 @@ def write_to_test_file(text: str):
 
 
 def compile_by_jar() -> str:
-    cmd_res = subprocess.getstatusoutput("java -jar compiler.jar")
+    cmd_res = subprocess.getstatusoutput("java -jar Compiler.jar")
     print(cmd_res)
     success = True
     # TODO 修改java判断程序是否执行成功、添加时间限制，1s以上则失败
