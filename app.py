@@ -1,29 +1,17 @@
-import streamlit as st
-from complier import *
-
-from complier import*
-st.set_page_config(page_title="Compiler", layout="wide")
-
-st.title("SysY 2 llvm 简易编译器")
-
-example_code = "int main(){\n \tprintf(\"Hello World\\n\");\n\treturn 0;\n}"
-output = "```c\nint main(){\n \tprintf(\"Hello World\\n\");\n\treturn 0;\n}\n```"
-
-col1, col2 = st.columns(2, gap="large")
-
-is_wrong = False
-with col1:
-    code_input = st.text_area(label="SysY", value=example_code,
-                              height=600)
-    compile_button = st.button("编译")
-    if compile_button:
-        if len(code_input) == 0:
-            pass
-        else:
-            write_to_test_file(code_input)
-            output = compile_by_jar()
+import gradio as gr
 
 
-if not is_wrong:
-    with col2:
-        st.markdown(output)
+# 处理代码输入的函数
+def process_code(code):
+    return f"你输入的代码是:\n{code}"
+
+
+# 创建界面
+interface = gr.Interface(
+    fn=process_code,  # 函数
+    inputs=gr.Code(language="python"),  # 设置输入框为代码输入框，语言为Python
+    outputs="text"  # 输出为文本
+)
+
+# 启动界面
+interface.launch()

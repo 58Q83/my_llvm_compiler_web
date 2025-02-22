@@ -5,6 +5,7 @@ from streamlit import success
 
 test_file_path = "testfile.txt"
 ans_file_path = "llvm_ir.txt"
+TIME_LIMIT = 1
 
 
 def load_ans(is_error=False) -> str:
@@ -27,10 +28,13 @@ def write_to_test_file(text: str):
 
 
 def compile_by_jar() -> str:
-    cmd_res = subprocess.getstatusoutput("java -jar compiler.jar")
+    cmd_res = subprocess.getstatusoutput(f"timeout {TIME_LIMIT} java -jar compiler.jar")
     print(cmd_res)
-    success = True
-    # TODO 修改java判断程序是否执行成功、添加时间限制，1s以上则失败
-    if success:
-        res = load_ans()
-    return "```shell\n" + res + "\n```"
+    if cmd_res[0] != 0:  # 失败的返回码通常不是0
+        if 'timed out' in cmd_res[1]:  # 如果错误信息包含 timeout
+            return "Execution Timeout (TLE)"
+        else:
+            return "Compilation Failed"
+    # 如果成功，加载结果
+    res = load_ans()
+    return f"\nShell Output:\n{res}\n"
