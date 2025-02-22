@@ -20,4 +20,4 @@ interface = gr.Interface(
 )
 
 # 启动界面
-interface.launch()
+interface.launch(server_port=8501)
