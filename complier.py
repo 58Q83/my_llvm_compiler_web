@@ -28,7 +28,8 @@ def write_to_test_file(text: str):
 
 
 def compile_by_jar() -> str:
-    cmd_res = subprocess.getstatusoutput(f"timeout {TIME_LIMIT} java -jar compiler.jar")
+    cmd = f"timeout {TIME_LIMIT} java -jar compiler.jar"
+    cmd_res = subprocess.getstatusoutput(cmd)
     print(cmd_res)
     if cmd_res[0] != 0:  # 失败的返回码通常不是0
         if 'timed out' in cmd_res[1]:  # 如果错误信息包含 timeout
